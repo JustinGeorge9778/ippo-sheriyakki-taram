@@ -1,59 +1,58 @@
 <img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
 
-# [Project Name] 🎯
+# [🎭ഇപ്പൊ ശെരിയാക്കി തരാം😂] 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+https://ippo-sheriyakki-taram.vercel.app/
+### Team Name: [Justi]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
+- Team Lead: [Sobin.C.Sinu] - [Mar Baselios Christian College of Engineering and Technology]
+- Member 2: [Justin George] - [Mar Baselios Christian College of Engineering and Technology]
 - Member 3: [Name] - [College]
 
 ### Project Description
-[2-3 lines about what your project does]
+[This is a  golf game built with HTML, JavaScript, and CSS. Players aim a golf ball toward a moving hole, with engaging animations, sound effects, and humorous dialogs that mimic the dramatic and comedic style. The game tracks shots, accuracy, and distance, offering a fun, casual experience.]
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+[the lack of a golf game where the hole cheekily runs away after every shot, taunting players with comedic Malayalam dialogs]
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+[this code solves the runaway-hole crisis by turning golf into a laugh-out-loud chase scene, packed with Malayalam wit, flashy visuals, and punchy sounds. It’s less about sinking the ball and more about enjoying the hole’s sass, your epic fails, and the game’s non-stop banter—like playing golf in a comedy movie where the hole’s the star villain! 😎🎬]
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
-
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+- [HTML,JAVASCRIPT,CSS]
+- [The 2D golf game with a Malayalam theme uses no external frameworks or libraries.]
+- [Relies on Web Audio API and DOM API for core functionality,Uses Google Fonts (Roboto, Orbitron) and a Vercel-hosted grass texture image]
+- [Web Audio API (sound effects)
+  Browser DOM API (DOM manipulation and events)
+  Google Fonts (Roboto, Orbitron for typography)
+  Vercel Blob Storage (grass texture image hosting)
+  Text Editor/IDE ( VS Code)
+  Browser Developer Tools ( Chrome DevTools)]
 
 ### Implementation
 For Software:
 # Installation
-[commands]
-
+[None]
 # Run
-[commands]
-
+[None]
 ### Project Documentation
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
+![https://drive.google.com/file/d/1a_M5ZQn7n9o_D8oN8JdaaOusff-nD0eN/view?usp=drive_link](Add screenshot 1 here with proper name)
 *Add caption explaining what this shows*
 
-![Screenshot2](Add screenshot 2 here with proper name)
+![https://drive.google.com/file/d/1a_M5ZQn7n9o_D8oN8JdaaOusff-nD0eN/view?usp=drive_link](Add screenshot 2 here with proper name)
 *Add caption explaining what this shows*
 
-![Screenshot3](Add screenshot 3 here with proper name)
+![https://drive.google.com/file/d/1a_M5ZQn7n9o_D8oN8JdaaOusff-nD0eN/view?usp=drive_link](Add screenshot 3 here with proper name)
 *Add caption explaining what this shows*
 
 # Diagrams
@@ -81,15 +80,15 @@ For Hardware:
 
 ### Project Demo
 # Video
-[Add your demo video link here]
+[https://drive.google.com/file/d/1a_M5ZQn7n9o_D8oN8JdaaOusff-nD0eN/view?usp=drive_link]
 *Explain what the video demonstrates*
 
 # Additional Demos
 [Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
+- [Sobin Sinu]: [Script.js file and style.css]
+- [Justin George]: [index.html file and style.css]
 - [Name 3]: [Specific contributions]
 
 ---
