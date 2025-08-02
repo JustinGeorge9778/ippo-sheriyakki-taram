@@ -1,0 +1,981 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 50%, #68bb59 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Game Header */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+.logo-text {
+  font-family: "Orbitron", monospace;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  letter-spacing: 2px;
+}
+
+.game-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 15px 20px;
+  text-align: center;
+  min-width: 100px;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-family: "Orbitron", monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* 2D Golf Course - ULTRA REALISTIC with Actual Grass Photo */
+.golf-course-2d {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  cursor: crosshair;
+
+  /* Use the uploaded grass photo as background */
+  background-image: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/istockphoto-480560906-612x612.jpg-hSWNOXDrvvxlAM3maDR2tOIUk8AOQ8.jpeg");
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  background-position: 0 0;
+
+  /* Add subtle overlay for depth and game elements visibility */
+  background-blend-mode: multiply;
+  background-color: rgba(255, 255, 255, 0.95);
+
+  /* Enhance the grass texture with subtle shadows for depth */
+  box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.05), inset 0 0 100px rgba(34, 139, 34, 0.1), inset 0 0 50px
+    rgba(0, 0, 0, 0.03);
+}
+
+/* Add subtle natural variations over the grass photo */
+.golf-course-2d::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  /* Subtle tee area - slightly darker grass */
+  background: radial-gradient(ellipse 200px 120px at 5% 50%, rgba(0, 50, 0, 0.08) 0%, transparent 70%),
+    /* Green area - slightly lighter, well-maintained grass */
+    radial-gradient(ellipse 220px 140px at 95% 50%, rgba(100, 255, 100, 0.06) 0%, transparent 75%),
+    /* Subtle fairway center */
+    linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 30%,
+      rgba(50, 200, 50, 0.04) 30%,
+      rgba(50, 200, 50, 0.04) 70%,
+      transparent 70%,
+      transparent 100%
+    );
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Remove the complex ::after pseudo-element since we're using real grass */
+.golf-course-2d::after {
+  content: "";
+  display: none;
+}
+
+/* 2D Ball - Professional Golf Ball */
+.ball-2d {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 80px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 30% 30%, #ffffff, #f8f8f8, #f0f0f0, #e8e8e8);
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), inset -2px -2px 6px rgba(0, 0, 0, 0.08), inset 1px 1px 3px
+    rgba(255, 255, 255, 0.6);
+  z-index: 20;
+  transition: all 0.1s ease;
+}
+
+.ball-shine {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 7px;
+  height: 7px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.3) 60%, transparent 80%);
+  border-radius: 50%;
+}
+
+.ball-2d.moving {
+  transition: none;
+}
+
+.ball-2d.impact {
+  animation: ballImpact2D 0.4s ease-out;
+}
+
+.ball-2d.bounce {
+  animation: ballBounce2D 0.3s ease-out;
+}
+
+/* Hole Container */
+.hole-container-2d {
+  position: absolute;
+  top: 50%;
+  right: 80px;
+  transform: translate(50%, -50%);
+  z-index: 15;
+  transition: all 0.3s ease;
+}
+
+/* 2D Hole - Championship Golf Hole */
+.hole-2d {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, #000000 0%, #0a0a0a 40%, #1a1a1a 70%, #8b4513 100%);
+  border-radius: 50%;
+  border: 3px solid #654321;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(139, 69, 19, 0.3);
+  position: relative;
+}
+
+/* 2D Flag - Ultra Gentle Natural Movement */
+.golf-flag-2d {
+  position: absolute;
+  width: 6px;
+  height: 80px;
+  top: -40px;
+  left: 20px;
+  z-index: 25;
+}
+
+.flag-pole {
+  position: absolute;
+  width: 2px;
+  height: 70px;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+  border-radius: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.25);
+}
+
+.flag-cloth {
+  position: absolute;
+  top: 5px;
+  left: 2px;
+  width: 25px;
+  height: 18px;
+  background: linear-gradient(135deg, #ff0000 0%, #dc143c 30%, #cc0000 60%, #ff3333 100%);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  animation: ultraGentleFlagWave 8s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: left center;
+}
+
+.flag-number {
+  color: white;
+  font-family: "Orbitron", monospace;
+  font-size: 8px;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* 2D Arrow - Reduced Size for Better Aiming */
+.arrow-2d {
+  position: absolute;
+  width: 40px; /* Reduced from 60px */
+  height: 3px; /* Reduced from 4px */
+  transform-origin: left center;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 18;
+}
+
+.arrow-2d.visible {
+  opacity: 1;
+}
+
+.arrow-shaft {
+  position: absolute;
+  width: 32px; /* Reduced from 50px */
+  height: 100%;
+  background: linear-gradient(90deg, #ff4500, #ff6347, #ff7f50);
+  border-radius: 1.5px; /* Reduced from 2px */
+  box-shadow: 0 1px 3px rgba(255, 69, 0, 0.4); /* Reduced shadow */
+  transition: all 0.1s ease;
+}
+
+.arrow-head {
+  position: absolute;
+  right: -6px; /* Reduced from -8px */
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 8px solid #ff4500; /* Reduced from 12px */
+  border-top: 4px solid transparent; /* Reduced from 6px */
+  border-bottom: 4px solid transparent; /* Reduced from 6px */
+  transform: translateY(-50%);
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3)); /* Reduced shadow */
+  transition: all 0.1s ease;
+}
+
+/* Enhanced Ultra-Realistic Golf Club */
+.golf-club-2d {
+  position: absolute;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 22;
+  transform-origin: bottom center;
+  filter: drop-shadow(3px 3px 12px rgba(0, 0, 0, 0.4));
+}
+
+.golf-club-2d.swinging {
+  opacity: 1;
+  animation: realisticClubSwing 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.club-shaft {
+  width: 6px;
+  height: 120px;
+  /* White shaft with subtle shading */
+  background: linear-gradient(
+    180deg,
+    /* Grip section - slightly darker white/gray */
+    #e8e8e8 0%,
+    #f0f0f0 8%,
+    #f5f5f5 15%,
+    /* Main shaft - pure white with subtle variations */
+    #ffffff 20%,
+    #fafafa 25%,
+    #ffffff 30%,
+    #fcfcfc 40%,
+    #ffffff 50%,
+    #fcfcfc 60%,
+    #ffffff 70%,
+    #fafafa 75%,
+    #ffffff 80%,
+    #f5f5f5 85%,
+    #f0f0f0 90%,
+    #e8e8e8 100%
+  );
+  border-radius: 3px;
+  position: relative;
+  /* Enhanced shadows for white club */
+  box-shadow: 3px 0 8px rgba(0, 0, 0, 0.3), /* Inner highlights for white surface */ inset 2px 0 3px
+    rgba(255, 255, 255, 0.9), inset -2px 0 3px rgba(0, 0, 0, 0.1), /* Depth shadow */ 0 0 15px rgba(0, 0, 0, 0.2);
+
+  /* Enhanced grip texture for white shaft */
+  background-image: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 1.5px,
+      rgba(0, 0, 0, 0.08) 1.5px,
+      rgba(0, 0, 0, 0.08) 2.5px
+    ), /* Shaft reflection for white surface */
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.3) 20%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 0.3) 80%,
+      transparent 100%
+    );
+}
+
+/* Shaft highlight for metallic effect */
+.club-shaft::before {
+  content: "";
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 60%;
+  /* Brighter highlight for white shaft */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 1) 30%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.9) 70%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  border-radius: 1px;
+}
+
+/* Grip detail */
+.club-shaft::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  /* White grip area with subtle texture */
+  background: linear-gradient(180deg, #e0e0e0 0%, #f0f0f0 50%, #f8f8f8 100%);
+  border-radius: 3px 3px 1px 1px;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.club-head {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 35px;
+  height: 22px;
+  /* White club head with metallic shine */
+  background: linear-gradient(
+    135deg,
+    #f8f8f8 0%,
+    #ffffff 10%,
+    #ffffff 20%,
+    #ffffff 30%,
+    #ffffff 40%,
+    #ffffff 50%,
+    #ffffff 60%,
+    #ffffff 70%,
+    #ffffff 80%,
+    #ffffff 90%,
+    #f5f5f5 100%
+  );
+  /* Curved striking edge */
+  border-radius: 4px 4px 50% 50%;
+  /* Enhanced shadows for white surface */
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    /* Top highlight */
+    inset 0 2px 4px rgba(255, 255, 255, 1),
+    /* Bottom curved shadow */
+    inset 0 -3px 6px rgba(0, 0, 0, 0.15),
+    /* Side shadows for depth */
+    inset 2px 0 2px rgba(255, 255, 255, 0.8),
+    inset -2px 0 2px rgba(0, 0, 0, 0.1),
+    /* Curved edge shadow */
+    0 2px 8px rgba(0, 0, 0, 0.3);
+
+  /* Enhanced club face grooves for curved surface */
+  /* Curved grooves following the club face */
+  background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 1.5px,
+      rgba(0, 0, 0, 0.1) 1.5px,
+      rgba(0, 0, 0, 0.1) 2px,
+      transparent 2px,
+      transparent 3.5px
+    ), /* Vertical center line */
+    linear-gradient(
+      0deg,
+      transparent 0%,
+      transparent 45%,
+      rgba(0, 0, 0, 0.08) 48%,
+      rgba(0, 0, 0, 0.08) 52%,
+      transparent 55%,
+      transparent 100%
+    ), /* Curved surface gradient */
+    radial-gradient(
+      ellipse at center bottom,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.7) 50%,
+      rgba(255, 255, 255, 0.5) 100%
+    );
+}
+
+/* Club head shine/reflection */
+.club-head::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 12px;
+  height: 6px;
+  /* Enhanced shine for white club head */
+  background: radial-gradient(
+    ellipse,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.8) 30%,
+    rgba(255, 255, 255, 0.4) 60%,
+    transparent 80%
+  );
+  border-radius: 50%;
+}
+
+/* Club head brand mark/logo area */
+.club-head::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 3px;
+  /* Subtle brand mark on white surface */
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 1px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Comedy Dialog Display */
+.comedy-dialog-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+  opacity: 0;
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.comedy-dialog-display.visible {
+  opacity: 1;
+  animation: comedyDialogAppear 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.dialog-container {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 240, 240, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  padding: 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 10px 25px rgba(0, 0, 0, 0.15), inset 0 1px 3px rgba(255, 255, 255, 0.8);
+  text-align: center;
+  min-width: 350px;
+  max-width: 500px;
+  position: relative;
+}
+
+.dialog-container::before {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 15px solid rgba(255, 255, 255, 0.95);
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.1));
+}
+
+.dialog-title {
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  margin-bottom: 15px;
+  font-family: "Orbitron", monospace;
+  letter-spacing: 1px;
+}
+
+.dialog-emoji {
+  font-size: 3.5rem;
+  margin: 15px 0;
+  animation: comedyBounce 1.2s ease-in-out infinite;
+}
+
+.dialog-text {
+  color: #444;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 15px 0;
+}
+
+.dialog-subtext {
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* 2D Power Meter */
+.power-meter-2d {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 200px;
+  height: 50px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 30;
+}
+
+.power-meter-2d.visible {
+  opacity: 1;
+  animation: powerMeterAppear 0.4s ease-out;
+}
+
+.power-meter-bg {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+}
+
+.power-bar-2d {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00ff00 0%, #7fff00 20%, #ffff00 40%, #ffa500 60%, #ff8c00 80%, #ff0000 100%);
+  border-radius: 13px;
+  transition: width 0.1s ease;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+.power-label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-family: "Orbitron", monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  letter-spacing: 1px;
+}
+
+.power-percentage {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  font-family: "Orbitron", monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+/* Game Footer */
+.game-footer {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  z-index: 100;
+}
+
+.controls-panel {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.control-title {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.control-btn.active {
+  background: rgba(0, 255, 0, 0.2);
+  border-color: rgba(0, 255, 0, 0.5);
+  color: #00ff00;
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+.club-display {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+}
+
+.club-icon {
+  font-size: 1.5rem;
+}
+
+.club-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.club-name {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.club-specs {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+}
+
+.comment-display-2d {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  min-height: 60px;
+  min-width: 300px;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.comment-display-2d.visible {
+  opacity: 1;
+  animation: commentSlideIn 0.4s ease-out;
+}
+
+.comment-icon {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+.comment-text {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.instructions-2d {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.instruction-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.instruction-icon {
+  font-size: 1.2rem;
+}
+
+.instruction-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+/* Enhanced Animations */
+@keyframes ultraGentleFlagWave {
+  0% {
+    transform: scaleX(1) rotate(0deg) translateX(0px);
+  }
+  12.5% {
+    transform: scaleX(0.998) rotate(0.15deg) translateX(0.08px);
+  }
+  25% {
+    transform: scaleX(1) rotate(0deg) translateX(0px);
+  }
+  37.5% {
+    transform: scaleX(0.999) rotate(-0.1deg) translateX(-0.05px);
+  }
+  50% {
+    transform: scaleX(1) rotate(0deg) translateX(0px);
+  }
+  62.5% {
+    transform: scaleX(0.998) rotate(0.12deg) translateX(0.06px);
+  }
+  75% {
+    transform: scaleX(1) rotate(0deg) translateX(0px);
+  }
+  87.5% {
+    transform: scaleX(0.999) rotate(-0.08deg) translateX(-0.04px);
+  }
+  100% {
+    transform: scaleX(1) rotate(0deg) translateX(0px);
+  }
+}
+
+@keyframes realisticClubSwing {
+  0% {
+    transform: rotate(-75deg) scale(0.9);
+    opacity: 0.5;
+  }
+  10% {
+    transform: rotate(-60deg) scale(0.95);
+    opacity: 0.7;
+  }
+  25% {
+    transform: rotate(-30deg) scale(1);
+    opacity: 0.9;
+  }
+  40% {
+    transform: rotate(-5deg) scale(1.02);
+    opacity: 1;
+  }
+  55% {
+    transform: rotate(10deg) scale(1.05);
+    opacity: 1;
+  }
+  70% {
+    transform: rotate(30deg) scale(1.03);
+    opacity: 0.95;
+  }
+  85% {
+    transform: rotate(45deg) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(60deg) scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes comedyDialogAppear {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3) rotate(-15deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1) rotate(5deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes comedyBounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-15px) scale(1.1);
+  }
+  60% {
+    transform: translateY(-8px) scale(1.05);
+  }
+}
+
+@keyframes ballImpact2D {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes ballBounce2D {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes powerMeterAppear {
+  0% {
+    transform: translateY(-15px) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes commentSlideIn {
+  0% {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .game-header {
+    padding: 15px 20px;
+  }
+  .logo-text {
+    font-size: 1.4rem;
+  }
+  .game-stats {
+    gap: 15px;
+  }
+  .stat-card {
+    padding: 10px 15px;
+    min-width: 80px;
+  }
+  .controls-panel {
+    gap: 20px;
+  }
+  .instructions-2d {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+  .game-footer {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+  .controls-panel {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
+  .instructions-2d {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .power-meter-2d {
+    width: 150px;
+    left: 15px;
+    top: 15px;
+  }
+  .comment-display-2d {
+    min-width: 250px;
+    padding: 12px 20px;
+  }
+  .dialog-container {
+    min-width: 280px;
+    padding: 25px;
+  }
+}

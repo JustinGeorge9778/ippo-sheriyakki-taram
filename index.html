@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Game Header -->
+        <div class="game-header">
+            <div class="logo">
+                <span class="logo-icon">⛳</span>
+                <span class="logo-text">🎭ഇപ്പൊ ശെരിയാക്കി തരാം😂</span>
+            </div>
+            <div class="game-stats">
+                <div class="stat-card">
+                    <div class="stat-label">SHOTS</div>
+                    <div class="stat-value" id="shotCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">ACCURACY</div>
+                    <div class="stat-value" id="accuracy">100%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">DISTANCE</div>
+                    <div class="stat-value" id="distance">0m</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2D Golf Course -->
+        <div class="golf-course-2d" id="golfCourse">
+            <!-- Course Elements -->
+            <div class="ball-2d" id="ball">
+                <div class="ball-shine"></div>
+            </div>
+            
+            <!-- Hole with Flag -->
+            <div class="hole-container-2d" id="holeContainer">
+                <div class="hole-2d" id="hole"></div>
+                
+                <!-- Flag -->
+                <div class="golf-flag-2d" id="golfFlag">
+                    <div class="flag-pole"></div>
+                    <div class="flag-cloth">
+                        <div class="flag-number">18</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-2d" id="arrow">
+                <div class="arrow-shaft"></div>
+                <div class="arrow-head"></div>
+            </div>
+            
+            <div class="golf-club-2d" id="golfClub">
+                <div class="club-head"></div>
+                <div class="club-shaft"></div>
+            </div>
+            
+            <!-- Power Meter -->
+            <div class="power-meter-2d" id="powerMeter">
+                <div class="power-meter-bg">
+                    <div class="power-bar-2d" id="powerBar"></div>
+                </div>
+                <div class="power-label">POWER</div>
+                <div class="power-percentage" id="powerPercentage">0%</div>
+            </div>
+        </div>
+
+        <!-- Game Footer -->
+        <div class="game-footer">
+            <div class="controls-panel">
+                <div class="control-group">
+                    <div class="control-title">AUDIO</div>
+                    <div class="control-buttons">
+                        <button class="control-btn" id="audioStatus">
+                            <span class="btn-icon">🔊</span>
+                            <span class="btn-text">ENABLE SOUND</span>
+                        </button>
+                        <button class="control-btn" id="musicToggle">
+                            <span class="btn-icon">🎵</span>
+                            <span class="btn-text">MUSIC OFF</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-title">CLUB SELECTION</div>
+                    <div class="club-display">
+                        <div class="club-icon">🏌️‍♂️</div>
+                        <div class="club-info">
+                            <div class="club-name">Sand Wedge</div>
+                            <div class="club-specs">56° • 100-120m</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-display-2d" id="commentDisplay">
+                <div class="comment-icon">💬</div>
+                <div class="comment-text"></div>
+            </div>
+
+            <div class="instructions-2d">
+                <div class="instruction-item">
+                    <div class="instruction-icon">🖱️</div>
+                    <div class="instruction-text">Move mouse to aim</div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-icon">⚡</div>
+                    <div class="instruction-text">Hold & release for power</div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-icon">🎯</div>
+                    <div class="instruction-text">Watch the flag move!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
